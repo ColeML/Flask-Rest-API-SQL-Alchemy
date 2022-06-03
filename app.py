@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
+import os
 
 from db import db
 from resources.item import Item, Items
@@ -10,7 +11,7 @@ from security import authenticate, identity
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "cole"   # This should be hidden / secure in production code
 api = Api(app)
